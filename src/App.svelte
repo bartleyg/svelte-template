@@ -1,5 +1,7 @@
 <script>
 	export let name;
+	const testenv = process.env.TEST;
+	console.log('TEST ENV:', testenv);
 </script>
 
 <main>

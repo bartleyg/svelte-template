@@ -3,12 +3,14 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
+import { config } from 'dotenv';
+import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
 	let server;
-	
+
 	function toExit() {
 		if (server) server.kill(0);
 	}
@@ -36,6 +38,15 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		replace({
+      // stringify the object
+      process: JSON.stringify({
+        env: {
+          ...config().parsed // attach the .env config
+					// TEST: process.env.TEST,  // only use TEST instead of all .env (requires: export TEST=bartley)
+        }
+      }),
+    }),
 		svelte({
 			// enable run-time checks when not in production
 			dev: !production,

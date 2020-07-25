@@ -84,8 +84,7 @@ npm install -g vercel
 Then, from within your project folder:
 
 ```bash
-cd public
-vercel deploy --name my-project
+vercel
 ```
 
 ### With [surge](https://surge.sh/)
