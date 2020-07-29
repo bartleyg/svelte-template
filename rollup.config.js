@@ -38,12 +38,17 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
-		replace({
-      // stringify the object
+		!production && replace({
       process: JSON.stringify({
         env: {
-          ...config().parsed // attach the .env config
-					// TEST: process.env.TEST,  // only use TEST instead of all .env (requires: export TEST=bartley)
+          ...config().parsed // attach the .env config for dev
+        }
+      }),
+    }),
+		production && replace({
+      process: JSON.stringify({
+        env: {
+          TEST: process.env.TEST,
         }
       }),
     }),
